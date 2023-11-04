@@ -17,16 +17,13 @@ function App() {
 		{
 			path: "/",
 			element: <Home source={source} changeSource={changeSource} category={category} changeCategory={changeCategory} />,
-		}, {
-			path: "/TopStories",
-			element: <TopStories source={source} changeSource={changeSource} category={category} changeCategory={changeCategory} />,
-		}
+		},
 	]);
 	return (
 		<div className="App">
-			<header className="App-header">
+			<div className="App-header">
 				<RouterProvider router={router} />
-			</header>
+			</div>
 		</div>
 	);
 }

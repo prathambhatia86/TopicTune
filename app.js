@@ -32,6 +32,8 @@ const category = newsController.fetchCategories();
 
 
 app.post('/getNews', (req, res, next) => {
+    if (req.body.sources == undefined) req.body.sources = [];
+    if (req.body.categories == undefined) req.body.categories = [];
     if (req.body.sources.length === 0) {
         for (var key in source) {
             req.body.sources.push(source[key]);
