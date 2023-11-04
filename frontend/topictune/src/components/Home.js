@@ -72,8 +72,6 @@ export default function Home({ source, category, changeSource, changeCategory })
 
 
             <button id="togglesidebar" className={`${styles.openbtn}`} style={{ display: (navState === true ? 'none' : 'block'), position: 'absolute', top: '0px', left: '0px' }} onClick={toggleNav}>☰</button>
-            <div className="container-fluid" style={{ paddingTop: "4rem" }}>
-            </div>
             <Card />
         </div >
     )

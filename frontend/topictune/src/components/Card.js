@@ -1,15 +1,33 @@
-import React from 'react'
+import React from 'react';
+import Card from './SampleCard';
 
-export default function Card() {
+export default function CardGrid() {
     return (
-        <div className="card" style={{ width: "18rem", border: "2px solid black", boxShadow: "0px 4px 8px 0px rgba(0, 0, 0, 0.2)", backgroundColor: "#f8f8ff", borderRadius: "10px", padding: "20px", margin: "10px", transition: "transform 0.2s" }}>
-            <img src="..." className="card-img-top" alt="..." />
-            <div className="card-body" style={{ backgroundColor: "#f8f8ff" }}>
-                <h5 className="card-title">Card title</h5>
-                <p className="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                <a href="#" className="btn btn-primary" style={{ border: "1px solid #333", backgroundColor: "white", boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)", color: "#000" }}>Read More..</a>
-
+        <div className="container" style={{marginTop:'40px'}}>
+            <div className="row">
+                <div className="col-md-3 mb-3 mx-4">
+                    <Card
+                        title="Card Title 1"
+                        text="Some quick example text for Card 1."
+                        imgSrc="https://th.bing.com/th/id/OIP.2pziS-vfUL51iDqgbqOjVQHaJ4?pid=ImgDet&rs=1"
+                    />
+                </div>
+                <div className="col-md-3 mb-3 mx-4">
+                    <Card
+                        title="Card Title 2"
+                        text="Some quick example text for Card 2."
+                        imgSrc="https://th.bing.com/th?id=OSK.HERO3qx4szg27VWC1TvIitd3E_Tzlo8aAvbkJ5N1cPR5VpM&w=472&h=280&c=1&rs=2&o=6&pid=SANGAM"
+                    />
+                </div>
+                <div className="col-md-3 mb-3 mx-4">
+                    <Card
+                        title="Card Title 3"
+                        text="Some quick example text for Card 3."
+                        imgSrc="image3.jpg"
+                    />
+                </div>
+                {/* Add more cards using the Card component */}
             </div>
         </div>
-    )
+    );
 }

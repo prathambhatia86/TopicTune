@@ -23,9 +23,9 @@ function App() {
 	]);
 	return (
 		<div className="App">
-			<header className="App-header">
+			<div className="App-header">
 				<RouterProvider router={router} />
-			</header>
+			</div>
 		</div>
 	);
 }
