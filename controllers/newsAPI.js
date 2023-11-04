@@ -8,7 +8,7 @@ async function query(data) {
         "https://api-inference.huggingface.co/models/google/flan-t5-base",
         {
             headers: {
-                Authorization: "Bearer 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"
+                Authorization: "Bearer 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"
             },
             method: "POST",
             body: JSON.stringify(data),
@@ -18,11 +18,13 @@ async function query(data) {
     return result;
 }
 const fetchNews = (req, res) => {
-    let restrictive_prompt = "respond yes else no If the text contains information which seems to talk about ";
-    for (var val in req.body.restrictions) {
-        restrictive_prompt = restrictive_prompt + req.body.restrictions[val] + " ";
+    let restrictive_prompt = "respond yes else no If the text contains information which seems to talk about one of these topics: ";
+    console.log(req.body.restrictions);
+    for (var val of req.body.restrictions.current) {
+        restrictive_prompt = restrictive_prompt + val.value + ",";
     }
     restrictive_prompt = restrictive_prompt + ".";
+    console.log(restrictive_prompt);
     // Fetch top headlines from the newsapi
     newsapi.v2.topHeadlines({
         sources: req.body.sources.join(","),
@@ -35,6 +37,7 @@ const fetchNews = (req, res) => {
             let prompt = articles[val].description;
             final_prompt = restrictive_prompt + prompt;
             ans = await query({ "inputs": final_prompt });
+            console.log(ans);
             if (ans[0].generated_text == "no") {
                 new_response.push(articles[val]);
             }
