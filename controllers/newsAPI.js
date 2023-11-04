@@ -19,12 +19,10 @@ async function query(data) {
 }
 const fetchNews = (req, res) => {
     let restrictive_prompt = "respond yes else no If the text contains information which seems to talk about one of these topics: ";
-    console.log(req.body.restrictions);
     for (var val of req.body.restrictions.current) {
         restrictive_prompt = restrictive_prompt + val.value + ",";
     }
     restrictive_prompt = restrictive_prompt + ".";
-    console.log(restrictive_prompt);
     // Fetch top headlines from the newsapi
     newsapi.v2.topHeadlines({
         sources: req.body.sources.join(","),
@@ -38,15 +36,14 @@ const fetchNews = (req, res) => {
             let prompt = val.description;
             final_prompt = restrictive_prompt + prompt;
             ans = await query({ "inputs": final_prompt });
-            console.log(ans);
             if (ans[0].generated_text == "no") {
                 new_response.push(val);
             }
         }
-        const final_response={articles:new_response};
+        const final_response = { articles: new_response };
         console.log("NEW REQ");
-    
-            res.status(200).json(final_response);
+
+        res.status(200).json(final_response);
     });
 
 }

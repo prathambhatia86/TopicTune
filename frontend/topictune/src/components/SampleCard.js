@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default function Card({ title, text, imgSrc, link }) {
+export default function Card({ title, text, imgSrc, url }) {
     const cardStyle = {
         width: "15rem",
         border: "2px solid black",
@@ -34,7 +34,7 @@ export default function Card({ title, text, imgSrc, link }) {
                 <p className="card-text" style={textStyle}>
                     {truncatedText}
                 </p>
-                <a href={link} className="btn btn-primary" style={{ backgroundColor: "black", color: "white", border: "none" }}>
+                <a href={url} className="btn btn-primary" style={{ backgroundColor: "black", color: "white", border: "none" }}>
                     Read More
                 </a>
             </div>
