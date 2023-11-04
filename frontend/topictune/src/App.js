@@ -1,18 +1,26 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { createBrowserRouter, RouterProvider, } from "react-router-dom";
 import './App.css';
 import Home from './components/Home';
 import TopStories from './components/TopStories';
-const router = createBrowserRouter([
-	{
-		path: "/",
-		element: <Home />,
-	}, {
-		path: "/TopStories",
-		element: <TopStories />,
-	}
-]);
 function App() {
+	const [source, changeSource] = useState({});
+	const [category, changeCategory] = useState([]);
+	useEffect(() => {
+		fetch("http://localhost:5000/getSources").then((response) => {
+			console.log(response);
+			changeSource(response);
+		})
+	}, []);
+	const router = createBrowserRouter([
+		{
+			path: "/",
+			element: <Home source={source} changeSource={changeSource} category={category} changeCategory={changeCategory} />,
+		}, {
+			path: "/TopStories",
+			element: <TopStories source={source} changeSource={changeSource} category={category} changeCategory={changeCategory} />,
+		}
+	]);
 	return (
 		<div className="App">
 			<header className="App-header">

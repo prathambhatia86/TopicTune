@@ -13,9 +13,18 @@ export default function TopStories(props) {
         changeNavState(false);
     }
     const handleClick = () => {
-        console.log(1);
-        navigate('../')
+        navigate('../TopStories')
     }
+    let SourceOptions = (
+        <>
+
+        </>
+    )
+    let CategoryOptions = (
+        <>
+
+        </>
+    )
     let width = window.innerWidth;
     if (width >= 1250)
         width = 250
@@ -25,17 +34,29 @@ export default function TopStories(props) {
                 <i className={`${styles.closebtn}`} onClick={toggleNav}>×</i>
                 <br />
                 <div>
-                    <span data-bs-toggle="collapse" data-bs-target="#driverSidebar" onClick={handleClick}>
+                    <span data-bs-toggle="collapse" data-bs-target="#HomeSidebar" >
                         Home
                     </span>
-                    <div className="container-fluid collapse row " id="driverSidebar" style={{ backgroundColor: 'rgb(255, 250, 149)' }}>
-                    </div>
                 </div>
                 <br />
-                <div className="container" onClick={handleClick}>
-                    <span data-bs-toggle="collapse" data-bs-target="#cabSidebar" style={{ color: 'white' }}>
+                <div className="container">
+                    <span data-bs-toggle="collapse" data-bs-target="#TSSidebar" onClick={handleClick} style={{ color: 'pink' }}>
                         TopStories (Here)
                     </span>
+                </div>
+                <br />
+                <div>
+                    <span data-bs-toggle="collapse" data-bs-target="#SourceSidebar" >
+                        Sources
+                    </span>
+                    {SourceOptions}
+                </div>
+                <br />
+                <div>
+                    <span data-bs-toggle="collapse" data-bs-target="#CategorySidebar" >
+                        Category
+                    </span>
+                    {CategoryOptions}
                 </div>
                 <br />
             </div>
