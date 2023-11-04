@@ -7,7 +7,7 @@ async function query(data) {
 	const response = await fetch(
 		"https://api-inference.huggingface.co/models/google/flan-t5-base",
 		{
-			headers: { Authorization: "Bearer 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" },
+			headers: { Authorization: "Bearer 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" },
 			method: "POST",
 			body: JSON.stringify(data),
 		}
@@ -79,6 +79,7 @@ const fetchSources = async () => {
     for (var k of response.sources) {
         sources[k.name] = k.id;
     }
+   
     return sources;
 }
 

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState,useEffect, useRef } from "react";
 import styles from "../css/Home.module.css"
 import { useNavigate } from 'react-router-dom'
 import FormOptionwa from "./FormOptionwa";
@@ -6,6 +6,9 @@ import Card from "./Card";
 export default function Home({ source, category, changeSource, changeCategory }) {
     const navigate = useNavigate();
     const [navState, changeNavState] = useState(false);
+    const [checkSourceState,changeCheckSourceState]=useState(new Map());
+    let SourceOptions=useRef(-1);
+    
     const toggleNav = () => {
         changeNavState((prev) => {
             return (!prev);
@@ -17,16 +20,23 @@ export default function Home({ source, category, changeSource, changeCategory })
     const handleClick = () => {
         navigate('../TopStories')
     }
+
     let sources = [];
-    console.log(source);
+    let temp=new Map();
     for (let key in source) {
-        sources.push(<FormOptionwa text={key} />);
+        temp.set(key,1);
+        sources.push(<FormOptionwa text={key} cur={checkSourceState} change={changeCheckSourceState}/>);
     }
-    let SourceOptions = (
-        <>
-            {sources}
-        </>
-    )
+    
+    useEffect(() => {
+        SourceOptions.current=(
+            <>
+                {sources}
+            </>
+        )
+        changeCheckSourceState(temp);
+      }, [source]);
+      console.log(checkSourceState);
     let CategoryOptions = (
         <>
             {category.map((obj, i) => {
@@ -40,7 +50,7 @@ export default function Home({ source, category, changeSource, changeCategory })
     return (
         <div>
             <div id="mySidebar" className={`${styles.sidebar}  `} style={{ width: (navState === true ? width : '0px') }}>
-                <i className={`${styles.closebtn}`} onClick={toggleNav}>×</i>
+                <i className={`${styles.closebtn}`} onClick={toggleNav} style={{color:'black'}}>×</i>
                 <br />
                 <div>
                     <span data-bs-toggle="collapse" data-bs-target="#HomeSidebar" style={{ color: 'pink' }}>
@@ -58,7 +68,7 @@ export default function Home({ source, category, changeSource, changeCategory })
                     <span data-bs-toggle="collapse" data-bs-target="#SourceSidebar" >
                         Sources
                     </span>
-                    {SourceOptions}
+                    {SourceOptions.current}
                 </div>
                 <br />
                 <div>

@@ -3,13 +3,14 @@ import { createBrowserRouter, RouterProvider, } from "react-router-dom";
 import './App.css';
 import Home from './components/Home';
 import TopStories from './components/TopStories';
+import axios from "axios";
 function App() {
 	const [source, changeSource] = useState({});
 	const [category, changeCategory] = useState([]);
 	useEffect(() => {
-		fetch("http://localhost:5000/getSources").then((response) => {
+		axios.get("http://localhost:5000/getSources").then((response) => {
 			console.log(response);
-			changeSource(response);
+			changeSource(response.data);
 		})
 	}, []);
 	const router = createBrowserRouter([

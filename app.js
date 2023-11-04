@@ -7,22 +7,22 @@ app.use(express.json({ limit: "50mb" }))
 
 //Controllers
 const newsController = require("./controllers/newsAPI");
-async function query(data) {
-    const response = await fetch(
-        "https://api-inference.huggingface.co/models/google/flan-t5-base",
-        {
-            headers: { Authorization: "Bearer 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" },
-            method: "POST",
-            body: JSON.stringify(data),
-        }
-    );
-    const result = await response.json();
-    return result;
-}
+// async function query(data) {
+//     const response = await fetch(
+//         "https://api-inference.huggingface.co/models/google/flan-t5-base",
+//         {
+//             headers: { Authorization: "Bearer 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" },
+//             method: "POST",
+//             body: JSON.stringify(data),
+//         }
+//     );
+//     const result = await response.json();
+//     return result;
+// }
 
-query({ "inputs": "respond yes if the text contains information which seems to talk about israel palestine war then respond yes.\nText: Israel is bombing palestine" }).then((response) => {
-    console.log(JSON.stringify(response));
-});
+// query({ "inputs": "respond yes if the text contains information which seems to talk about israel palestine war then respond yes.\nText: Israel is bombing palestine" }).then((response) => {
+//     console.log(JSON.stringify(response));
+// });
 //Constants
 let source = []
 newsController.fetchSources().then((response) => {
@@ -41,10 +41,10 @@ app.post('/getNews', (req, res, next) => {
     next();
 }, newsController.fetchNews);
 app.get('/getCategories', (req, res) => {
-    res.status(200).json(categories);
+    res.status(200).json(category);
 });
 app.get('/getSources', (req, res) => {
-    res.status(200).json(sources);
+    res.status(200).json(source);
 });
 
 //Start the server on port 5000
