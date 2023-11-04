@@ -8,7 +8,7 @@ async function query(data) {
         "https://api-inference.huggingface.co/models/google/flan-t5-base",
         {
             headers: {
-                Authorization: "Bearer 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"
+                Authorization: "Bearer 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"
             },
             method: "POST",
             body: JSON.stringify(data),
@@ -33,21 +33,20 @@ const fetchNews = (req, res) => {
     }).then(async response => {
         let articles = response.articles;
         let new_response = [];
-        for (var val in articles) {
-            let prompt = articles[val].description;
+        console.log(response);
+        for (var val of response.articles) {
+            let prompt = val.description;
             final_prompt = restrictive_prompt + prompt;
             ans = await query({ "inputs": final_prompt });
             console.log(ans);
             if (ans[0].generated_text == "no") {
-                new_response.push(articles[val]);
+                new_response.push(val);
             }
         }
+        const final_response={articles:new_response};
         console.log("NEW REQ");
-        if (req.body.restrictions.length) {
-            res.status(200).json(new_response);
-        }
-        else
-            res.status(200).json(response);
+    
+            res.status(200).json(final_response);
     });
 
 }
