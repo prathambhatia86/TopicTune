@@ -13,7 +13,7 @@ export default function Home({ source, category, changeSource, changeCategory })
     let temp = useRef(new Map());
     let temp2 = useRef(new Map());
 
-    let ExclusionOptions=useRef(-1);
+    let ExclusionOptions = useRef(-1);
     const toggleNav = () => {
         changeNavState((prev) => {
             return (!prev);
@@ -25,8 +25,8 @@ export default function Home({ source, category, changeSource, changeCategory })
     const handleClick = () => {
         navigate('../TopStories')
     }
-    const changeExclusion=(temp)=>{
-    ExclusionOptions.current=temp;
+    const changeExclusion = (temp) => {
+        ExclusionOptions.current = temp;
     };
     let sources = [];
     for (let key in source) {
@@ -60,12 +60,12 @@ export default function Home({ source, category, changeSource, changeCategory })
         width = 250
     return (
         <div className="w-100">
-             
+
             <div id="mySidebar" className={`${styles.sidebar}  `} style={{ width: (navState === true ? width : '0px') }}>
                 <i className={`${styles.closebtn}`} onClick={toggleNav} style={{ color: 'black' }}>×</i>
                 <br />
                 <div>
-                    <span data-bs-toggle="collapse" data-bs-target="#HomeSidebar" style={{ color: 'pink', marginTop: '0px' }}>
+                    <span data-bs-toggle="collapse" data-bs-target="#HomeSidebar" style={{ color: 'red', marginTop: '0px' }}>
                         Home
                     </span>
                 </div>

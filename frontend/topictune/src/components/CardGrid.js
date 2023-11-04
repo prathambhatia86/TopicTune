@@ -2,9 +2,16 @@ import React, { useState, useEffect, useRef } from 'react';
 import CardRow from './CardRow';
 import axios from 'axios';
 import Exclusion from './Exclusion';
-
+import ClipLoader from "react-spinners/ClipLoader";
 export default function CardGrid({ source, category }) {
     let ExclusionOptions = useRef([]);
+    let [loading, setLoading] = useState(true);
+    let [color, setColor] = useState("#ffffff");
+    const override: CSSProperties = {
+        display: "block",
+        margin: "0 auto",
+        borderColor: "red",
+    };
 
     console.log(category);
     let sources = []
@@ -40,6 +47,7 @@ export default function CardGrid({ source, category }) {
                     tempgrid.push(tempRow);
                 }
                 changeCardGrid(tempgrid);
+                setLoading(false);
             })
     }, []);
     const changeExclusion = (temp) => {
@@ -68,15 +76,28 @@ export default function CardGrid({ source, category }) {
                     tempgrid.push(tempRow);
                 }
                 changeCardGrid(tempgrid);
+                setLoading(false);
             })
     };
 
     return (
         <>
-            <Exclusion changeExclusion={changeExclusion} />
-            <div className="container mx-0 my-0" style={{ marginTop: '40px' }}>
-                {cardGrid}
-            </div>
+            {loading && <div className='mt-5'><ClipLoader
+                color={color}
+                loading={loading}
+                cssOverride={override}
+                size={150}
+                aria-label="Loading Spinner"
+                data-testid="loader"
+            /></div>}
+            {!loading &&
+                <>
+                    <Exclusion changeExclusion={changeExclusion} />
+                    <div className="container mx-0 my-0" style={{ marginTop: '40px' }}>
+                        {cardGrid}
+                    </div>
+                </>
+            }
         </>
     );
 }
