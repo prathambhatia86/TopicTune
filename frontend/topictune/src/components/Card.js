@@ -1,33 +1,37 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Card from './SampleCard';
+import CardRow from './CardRow';
+import axios from 'axios';
 
 export default function CardGrid() {
+    const [news, changeNews] = useState([]);
+    var body = {
+        sources: [],
+        categories: []
+    }
+    axios({
+        method: 'post',
+        url: 'http://localhost:5000/getNews',
+        data: body
+    })
+        .then(function (response) {
+            changeNews(response.data);
+        });
+    let cardGrid = [];
+    setTimeout(() => {
+        for (let k = 0; k < news.length; k += 4) {
+            let tempRow = (<></>);
+            for (let k1 = k; k1 < news.length; k1 += 1) {
+                if (k1 == k + 4) break;
+                tempRow += (<CardRow />);
+            }
+            let cardRow = (<div className="row">)+{tempRow}+(</div>);
+            cardGrid.push(cardRow);
+        }
+    }, 2000);
     return (
-        <div className="container" style={{marginTop:'40px'}}>
-            <div className="row">
-                <div className="col-md-3 mb-3 mx-4">
-                    <Card
-                        title="Card Title 1"
-                        text="Some quick example text for Card 1."
-                        imgSrc="https://th.bing.com/th/id/OIP.2pziS-vfUL51iDqgbqOjVQHaJ4?pid=ImgDet&rs=1"
-                    />
-                </div>
-                <div className="col-md-3 mb-3 mx-4">
-                    <Card
-                        title="Card Title 2"
-                        text="Some quick example text for Card 2."
-                        imgSrc="https://th.bing.com/th?id=OSK.HERO3qx4szg27VWC1TvIitd3E_Tzlo8aAvbkJ5N1cPR5VpM&w=472&h=280&c=1&rs=2&o=6&pid=SANGAM"
-                    />
-                </div>
-                <div className="col-md-3 mb-3 mx-4">
-                    <Card
-                        title="Card Title 3"
-                        text="Some quick example text for Card 3."
-                        imgSrc="image3.jpg"
-                    />
-                </div>
-                {/* Add more cards using the Card component */}
-            </div>
+        <div className="container mx-0 my-0" style={{ marginTop: '40px' }}>
+            {cardGrid}
         </div>
     );
 }

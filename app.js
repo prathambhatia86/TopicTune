@@ -11,7 +11,7 @@ async function query(data) {
     const response = await fetch(
         "https://api-inference.huggingface.co/models/google/flan-t5-base",
         {
-            headers: { Authorization: "Bearer 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" },
+            headers: { Authorization: "Bearer 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" },
             method: "POST",
             body: JSON.stringify(data),
         }
@@ -32,6 +32,8 @@ const category = newsController.fetchCategories();
 
 
 app.post('/getNews', (req, res, next) => {
+    if (req.body.sources == undefined) req.body.sources = [];
+    if (req.body.categories == undefined) req.body.categories = [];
     if (req.body.sources.length === 0) {
         for (var key in source) {
             req.body.sources.push(source[key]);

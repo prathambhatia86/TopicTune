@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react'
 import { createBrowserRouter, RouterProvider, } from "react-router-dom";
 import './App.css';
 import Home from './components/Home';
-import TopStories from './components/TopStories';
 function App() {
 	const [source, changeSource] = useState({});
 	const [category, changeCategory] = useState([]);
@@ -16,10 +15,7 @@ function App() {
 		{
 			path: "/",
 			element: <Home source={source} changeSource={changeSource} category={category} changeCategory={changeCategory} />,
-		}, {
-			path: "/TopStories",
-			element: <TopStories source={source} changeSource={changeSource} category={category} changeCategory={changeCategory} />,
-		}
+		},
 	]);
 	return (
 		<div className="App">

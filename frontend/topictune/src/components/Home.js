@@ -38,19 +38,13 @@ export default function Home({ source, category, changeSource, changeCategory })
     if (width >= 1250)
         width = 250
     return (
-        <div>
+        <div className="w-100">
             <div id="mySidebar" className={`${styles.sidebar}  `} style={{ width: (navState === true ? width : '0px') }}>
                 <i className={`${styles.closebtn}`} onClick={toggleNav}>×</i>
                 <br />
                 <div>
                     <span data-bs-toggle="collapse" data-bs-target="#HomeSidebar" style={{ color: 'pink' }}>
                         Home (Here)
-                    </span>
-                </div>
-                <br />
-                <div className="container">
-                    <span data-bs-toggle="collapse" data-bs-target="#TSSidebar" onClick={handleClick} >
-                        TopStories
                     </span>
                 </div>
                 <br />
