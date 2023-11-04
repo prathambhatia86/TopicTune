@@ -9,6 +9,8 @@ export default function Home({ source, category, changeSource, changeCategory })
     const [checkSourceState, changeCheckSourceState] = useState(new Map());
     let SourceOptions = useRef(-1);
     let CategoryOptions = useRef(-1);
+    let temp = useRef(new Map());
+    let temp2 = useRef(new Map());
 
     const toggleNav = () => {
         changeNavState((prev) => {
@@ -23,10 +25,14 @@ export default function Home({ source, category, changeSource, changeCategory })
     }
 
     let sources = [];
-    let temp = new Map();
     for (let key in source) {
-        temp.set(key, 1);
-        sources.push(<FormOptionwa text={key} cur={checkSourceState} change={changeCheckSourceState} />);
+        temp.current.set(key, 1);
+        sources.push(<FormOptionwa text={key} cur={temp} change={changeCheckSourceState} key={key} />);
+    }
+    let categories = [];
+    for (let key of category) {
+        temp2.current.set(key, 1);
+        categories.push(<FormOptionwa text={key} cur={temp2} change={changeCheckSourceState} key={key} />);
     }
 
     useEffect(() => {
@@ -35,15 +41,15 @@ export default function Home({ source, category, changeSource, changeCategory })
                 {sources}
             </>
         )
-        changeCheckSourceState(temp);
+        if (temp.current != checkSourceState) changeCheckSourceState(temp.current);
     }, [source]);
     useEffect(() => {
         CategoryOptions.current = (
             <>
-                {category}
+                {categories}
             </>
         )
-        changeCheckSourceState(temp);
+        if (temp.current != checkSourceState) changeCheckSourceState(temp.current);
     }, [category]);
     let width = window.innerWidth;
     if (width >= 1250)
@@ -54,8 +60,8 @@ export default function Home({ source, category, changeSource, changeCategory })
                 <i className={`${styles.closebtn}`} onClick={toggleNav} style={{ color: 'black' }}>×</i>
                 <br />
                 <div>
-                    <span data-bs-toggle="collapse" data-bs-target="#HomeSidebar" style={{ color: 'pink' }}>
-                        Home (Here)
+                    <span data-bs-toggle="collapse" data-bs-target="#HomeSidebar" style={{ color: 'pink', marginTop: '0px' }}>
+                        Home
                     </span>
                 </div>
                 <br />

@@ -8,7 +8,7 @@ async function query(data) {
         "https://api-inference.huggingface.co/models/google/flan-t5-base",
         {
             headers: {
-                Authorization: "Bearer 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"
+                Authorization: "Bearer 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"
             },
             method: "POST",
             body: JSON.stringify(data),
