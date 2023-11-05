@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect,useRef } from 'react'
 import { createBrowserRouter, RouterProvider, } from "react-router-dom";
 import './App.css';
 import Home from './components/Home';
@@ -6,8 +6,9 @@ import axios from "axios";
 import CardGrid from './components/CardGrid';
 function App() {
 	const [source, changeSource] = useState({});
-	const [category, changeCategory] = useState([]);
-
+	const [category, changeCategory] = useState([]);  
+	const selectedSources=useRef([]);
+	const selectedCategories=useRef([]);
 	useEffect(() => {
 		axios.get("http://localhost:5000/getSources").then((response) => {
 			changeSource(response.data);
@@ -22,7 +23,7 @@ function App() {
 	const router = createBrowserRouter([
 		{
 			path: "/",
-			element: <Home source={source} changeSource={changeSource} category={category} changeCategory={changeCategory} />,
+			element: <Home source={source} changeSource={changeSource} category={category} changeCategory={changeCategory} selectedSources={selectedSources} selectedCategories={selectedCategories} />,
 		},
 	]);
 	return (
@@ -30,7 +31,7 @@ function App() {
 			<div className="App-header">
 				<RouterProvider router={router} />
 				<div>
-					{category.length && <CardGrid source={source} category={category} />}
+					{category.length && <CardGrid source={source} category={category} selectedSources={selectedSources} selectedCategories={selectedCategories}  />}
 				</div>
 			</div>
 		</div>

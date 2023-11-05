@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom'
 import FormOptionwa from "./FormOptionwa";
 import Exclusion from "./Exclusion";
 import Card from "./CardGrid";
-export default function Home({ source, category, changeSource, changeCategory }) {
+export default function Home({ source, category, changeSource, changeCategory,selectedSources,selectedCategories }) {
     const navigate = useNavigate();
     const [navState, changeNavState] = useState(false);
     const [checkSourceState, changeCheckSourceState] = useState(new Map());
@@ -12,7 +12,7 @@ export default function Home({ source, category, changeSource, changeCategory })
     let CategoryOptions = useRef(-1);
     let temp = useRef(new Map());
     let temp2 = useRef(new Map());
-
+   
     let ExclusionOptions = useRef(-1);
     const toggleNav = () => {
         changeNavState((prev) => {
@@ -29,23 +29,28 @@ export default function Home({ source, category, changeSource, changeCategory })
         ExclusionOptions.current = temp;
     };
     let sources = [];
+    let sourceSet=new Set();
     for (let key in source) {
         temp.current.set(key, 1);
-        sources.push(<FormOptionwa text={key} cur={temp} change={changeCheckSourceState} key={key} />);
+        sourceSet.add(key);
+        sources.push(<FormOptionwa text={key} cur={temp} change={changeCheckSourceState} key={key} selected={selectedSources}/>);
     }
+    selectedSources.current=Array.from(sourceSet);
     let categories = [];
+    let categorySet=new Set();
     for (let key of category) {
         temp2.current.set(key, 1);
-        categories.push(<FormOptionwa text={key} cur={temp2} change={changeCheckSourceState} key={key} />);
+        categorySet.add(key);
+        categories.push(<FormOptionwa text={key} cur={temp2} change={changeCheckSourceState} key={key} selected={selectedCategories}/>);
     }
-
+    selectedCategories.current=Array.from(categorySet);
     useEffect(() => {
         SourceOptions.current = (
             <>
                 {sources}
             </>
         )
-        if (temp.current != checkSourceState) changeCheckSourceState(temp.current);
+       changeCheckSourceState(temp.current);
     }, [source]);
     useEffect(() => {
         CategoryOptions.current = (

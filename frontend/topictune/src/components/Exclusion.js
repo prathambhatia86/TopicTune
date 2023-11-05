@@ -8,7 +8,7 @@ import InputGroup from 'react-bootstrap/InputGroup';
 import FormControl from 'react-bootstrap/FormControl';
 import ListGroup from 'react-bootstrap/ListGroup';
 
-function Exclusion({ changeExclusion }) {
+function Exclusion({ changeExclusion,setLoading}) {
 	const [userInput, setUserInput] = useState('');
 	const [list, setList] = useState([]);
 
@@ -34,6 +34,7 @@ function Exclusion({ changeExclusion }) {
 	};
 
 	const submit = () => {
+        setLoading(true);
 		changeExclusion(list);
 	};
 

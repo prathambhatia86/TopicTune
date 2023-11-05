@@ -3,7 +3,7 @@ import CardRow from './CardRow';
 import axios from 'axios';
 import Exclusion from './Exclusion';
 import ClipLoader from "react-spinners/ClipLoader";
-export default function CardGrid({ source, category }) {
+export default function CardGrid({ source, category,selectedSources,selectedCategories}) {
     let ExclusionOptions = useRef([]);
     let [loading, setLoading] = useState(true);
     let [color, setColor] = useState("#ffffff");
@@ -13,22 +13,20 @@ export default function CardGrid({ source, category }) {
         borderColor: "red",
     };
 
-    console.log(category);
     let sources = []
     for (var key in source) {
         sources.push(source[key]);
-    }
-    var body = {
-        sources: sources,
-        categories: category,
-        restrictions: ExclusionOptions
     }
     const [cardGrid, changeCardGrid] = useState([]);
     useEffect(() => {
         axios({
             method: 'post',
             url: 'http://localhost:5000/getNews',
-            data: body
+            data: {
+                sources: selectedSources.current,
+                categories: selectedCategories.current,
+                restrictions: ExclusionOptions
+            }
         })
             .then(function (news) {
                 news = news.data.articles;
@@ -51,13 +49,17 @@ export default function CardGrid({ source, category }) {
             })
     }, []);
     const changeExclusion = (temp) => {
-        console.log(temp);
+        
         ExclusionOptions.current = temp;
-
+     //console.log(body.categories)
         axios({
             method: 'post',
             url: 'http://localhost:5000/getNews',
-            data: body
+            data:{
+                sources: selectedSources.current,
+                categories: selectedCategories.current,
+                restrictions: ExclusionOptions
+            }
         })
             .then(function (news) {
                 news = news.data.articles;
@@ -92,7 +94,7 @@ export default function CardGrid({ source, category }) {
             /></div>}
             {!loading &&
                 <>
-                    <Exclusion changeExclusion={changeExclusion} />
+                    <Exclusion changeExclusion={changeExclusion} setLoading={setLoading} />
                     <div className="container mx-0 my-0" style={{ marginTop: '40px' }}>
                         {cardGrid}
                     </div>

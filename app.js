@@ -25,8 +25,13 @@ const newsController = require("./controllers/newsAPI");
 // });
 //Constants
 let source = []
+let sourceFull=-1;
 newsController.fetchSources().then((response) => {
     source = response;
+})
+newsController.fetchAll().then((response) => {
+    sourceFull = response;
+
 })
 let category = [];
 newsController.fetchCategories().then((response) => {
@@ -43,6 +48,8 @@ app.post('/getNews', (req, res, next) => {
             req.body.sources.push(source[key]);
         }
     }
+    console.log(req.body.categories);
+    req.body.all=sourceFull
     if (req.body.categories.length === 0) req.body.categories = category;
     next();
 }, newsController.fetchNews);
